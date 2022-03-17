@@ -1,7 +1,8 @@
 import { gql, useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
-import { Button, StyleSheet, TextInput, View } from "react-native";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { StyleSheet, View } from "react-native";
+import { Checkbox, IconButton, TextInput } from "react-native-paper";
+import { primaryColor } from "./common";
 
 const UPDATE_TASK = gql`
   mutation UpdateTask($input: UpdateTaskInput!) {
@@ -33,11 +34,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  name: {
-    color: "#000",
-    fontSize: 16,
-    fontWeight: "400",
+  input: {
     flexGrow: 1,
+    backgroundColor: "transparent",
   },
 });
 
@@ -69,18 +68,20 @@ export default function Task({ id, name, complete }) {
 
   return (
     <View style={styles.container}>
-      <BouncyCheckbox
-        disableBuiltInState
-        disabled={false}
-        isChecked={completeValue}
-        onPress={(v) => setCompleteValue(!v)}
+      <Checkbox
+        color={primaryColor}
+        status={completeValue ? "checked" : "unchecked"}
+        onPress={() => setCompleteValue(!completeValue)}
       />
       <TextInput
-        style={styles.name}
+        dense
+        mode="flat"
         value={nameValue}
+        style={styles.input}
         onChangeText={setNameValue}
+        underlineColor="transparent"
       />
-      <Button disabled={loading} onPress={onPressDelete} title="Remove" />
+      <IconButton icon="delete" disabled={loading} onPress={onPressDelete} />
     </View>
   );
 }

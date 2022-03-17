@@ -1,5 +1,7 @@
 import { gql, useMutation } from "@apollo/client";
 import { Button, StyleSheet, View } from "react-native";
+import { FAB } from "react-native-paper";
+import { primaryColor } from "./common";
 
 const CREATE_TASK = gql`
   mutation CreateTask($input: CreateTaskInput!) {
@@ -14,8 +16,12 @@ const CREATE_TASK = gql`
 `;
 
 const styles = StyleSheet.create({
-  button: {
-    padding: 20,
+  fab: {
+    position: "absolute",
+    margin: 16,
+    right: 0,
+    bottom: 0,
+    backgroundColor: primaryColor,
   },
 });
 
@@ -29,13 +35,5 @@ export default function TaskList() {
     createTask({ variables });
   };
 
-  return (
-    <View>
-      <Button
-        style={styles.button}
-        title="Create Task"
-        onPress={onPressCreate}
-      />
-    </View>
-  );
+  return <FAB style={styles.fab} small icon="plus" onPress={onPressCreate} />;
 }
