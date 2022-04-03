@@ -1,16 +1,10 @@
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import Box from "@mui/material/Box";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { green, orange } from "@mui/material/colors";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./App.css";
 import AppBar from "./components/AppBar";
 import TaskList from "./components/TaskList";
-import { green, orange } from "@mui/material/colors";
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  useQuery,
-  gql,
-} from "@apollo/client";
 
 const client = new ApolloClient({
   uri: "http://127.0.0.1:3001/graphql",
@@ -28,7 +22,7 @@ const theme = createTheme({
   },
 });
 
-export default () => (
+const App = () => (
   <ApolloProvider client={client}>
     <ThemeProvider theme={theme}>
       <Box sx={{ flexGrow: 1 }}>
@@ -38,3 +32,5 @@ export default () => (
     </ThemeProvider>
   </ApolloProvider>
 );
+
+export default App;
