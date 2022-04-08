@@ -24,6 +24,25 @@ You can see the queries defined on the graph at `api/app/graphql/types/query_typ
 
 There are three mutations implemented that you can find in `api/app/graphql/mutations/`. These are create, update, and delete actions for the `Task` model.
 
+## Action Mailer
+Action Mailer is the Rails module that allows you to send emails from the backend. If you've used Rails before, you are likely familiar with Action Mailer. If you have not, fear not. You can get up to speed using [this guide](https://guides.rubyonrails.org/action_mailer_basics.html).
+
+You will find an example of a mailer implementation at `api/app/mailers/task_mailer.rb` and its corresponding view at `api/app/view/task_mailer/example_email.html.erb`. Feel free to extend this mailer or create your own. 
+
+The development environment is configured to use [Letter Opener](https://github.com/ryanb/letter_opener) and [Letter Opener Web](https://github.com/fgrehm/letter_opener_web) to simulate sending emails without connecting a real SMTP server. These libraries will allow you to see all the emails you've sent on a virtual inbox by visiting `http://localhost:3001/letter_opener`.
+
+If you'd like to test that out, open a Rails console with the following:
+```
+cd api
+bundle exec rails c
+```
+Then fire off an email with:
+```
+TaskMailer.with(task_id: 1).example_email.deliver_now
+```
+You should be able to see your email at `http://localhost:3001/letter_opener`.
+
+
 ## Starting the server
 You can start the application with
 ```
