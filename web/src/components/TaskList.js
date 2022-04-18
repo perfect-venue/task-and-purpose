@@ -1,9 +1,10 @@
-import { gql, useQuery } from "@apollo/client";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import * as React from "react";
-import CreateButton from "./CreateButton";
-import Task from "./Task";
+import { gql, useQuery } from '@apollo/client';
+import { CircularProgress, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import * as React from 'react';
+import CreateButton from './CreateButton';
+import Task from './Task';
 
 const GET_TASKS = gql`
   query GetTasks {
@@ -11,26 +12,52 @@ const GET_TASKS = gql`
       id
       name
       complete
+      user {
+        fullName
+      }
+    }
+  }
+`;
+
+const GET_USERS = gql`
+  query GetUsers {
+    users {
+      id
+      fullName
+      email
     }
   }
 `;
 
 const TaskList = () => {
-  const { data } = useQuery(GET_TASKS);
-  const tasks = data?.tasks || [];
+  const { data, loading, error } = useQuery(GET_TASKS);
+  const { data: { users } = {} } = useQuery(GET_USERS);
 
+  if (loading) {
+    return <CircularProgress />;
+  }
+  if (error) {
+    <Typography>YOU SHALL NOT PASS: {error}</Typography>;
+  }
   return (
     <Box
       sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "80vh",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '80vh',
       }}
     >
-      <Paper sx={{ width: "50vw" }}>
-        {tasks.map((task) => (
-          <Task key={task.id} {...task} />
+      <Paper sx={{ width: '50vw' }}>
+        {data?.tasks.map((task) => (
+          <Task
+            key={task.id}
+            complete={task.complete}
+            name={task.name}
+            id={task.id}
+            taskOwner={task.user}
+            users={users}
+          />
         ))}
         <CreateButton />
       </Paper>
