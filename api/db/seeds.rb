@@ -6,5 +6,40 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Task.create!(name: 'Foo', complete: true)
-Task.create!(name: 'Bar', complete: false)
+
+john = User.create!(
+  email: "john.doe@example.com",
+  first_name: "John",
+  last_name: "Doe"
+)
+
+jane = User.create!(
+  email: "jane.doe@example.com",
+  first_name: "Jane",
+  last_name: "Doe"
+)
+
+Task.create!(
+  [
+    {
+      name: "Martian Chronicles",
+      complete: false,
+      user: john,
+    },
+    {
+      name: "The Martian",
+      complete: false,
+      user: john,
+    },
+    {
+      name: "Doom",
+      complete: false,
+      user: jane,
+    },
+    {
+      name: "Mars Attacks!",
+      complete: true,
+      user: jane,
+    }
+  ]
+)
