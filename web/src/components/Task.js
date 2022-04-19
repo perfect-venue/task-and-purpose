@@ -106,7 +106,7 @@ const Task = ({ id, name, complete, taskOwner, users, taskOwnerId, dueDate }) =>
           sx={{ flexGrow: 1 }}
         />
         <DesktopDatePicker
-          label="Date desktop"
+          label="Due Date"
           inputFormat="MM/DD/YYYY"
           value={dateValue}
           onChange={handleDateChange}
