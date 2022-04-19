@@ -59,11 +59,10 @@ const Task = ({ id, name, complete, taskOwner, users }) => {
     deleteTask({ variables });
   };
 
-  const handleOwnerUpdate = (e) => {
+  const handleOwnerUpdate = (e, userId) => {
     const variables = {
-      input: { taskId: id, name: nameValue, complete: completeValue, userId: e.target.value },
+      input: { taskId: id, name: nameValue, complete: completeValue, userId },
     };
-    console.log(variables)
     updateTask({ variables });
   };
 
@@ -84,19 +83,15 @@ const Task = ({ id, name, complete, taskOwner, users }) => {
         onChange={(e) => setNameValue(e.target.value)}
         sx={{ flexGrow: 1 }}
       />
-      <InputLabel sx={{ mr: '8px' }} id="demo-simple-select-label">
-        Task Owner
-      </InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={taskOwner?.fullName}
-        label="Age"
-        onChange={handleOwnerUpdate}
-      >
+      <InputLabel sx={{ mr: '8px' }}>Task Owner</InputLabel>
+      <Select value={taskOwner?.fullName} label="Task Owner">
         {users?.map((user) => {
           return (
-            <MenuItem key={user.id} value={user.id}>
+            <MenuItem
+              key={user.id}
+              value={user.fullName}
+              onClick={(e) => handleOwnerUpdate(e, user.id)}
+            >
               {user.fullName}
             </MenuItem>
           );
