@@ -4,7 +4,7 @@ module Types
     field :name, String
     field :complete, Boolean
     field :user, Types::UserType, null: true
-    field :user_id, ID, null: false
+    field :user_id, ID, null: true
 
     def id
       object.to_global_id.to_s

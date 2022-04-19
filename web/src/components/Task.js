@@ -34,7 +34,7 @@ const DELETE_TASK = gql`
   }
 `;
 
-const Task = ({ id, name, complete, taskOwner, users }) => {
+const Task = ({ id, name, complete, taskOwner, users, taskOwnerId }) => {
   const [nameValue, setNameValue] = useState(name);
   const [completeValue, setCompletedValue] = useState(complete);
   const [updateTask, { loading: updateLoading }] = useMutation(UPDATE_TASK, {
@@ -45,14 +45,14 @@ const Task = ({ id, name, complete, taskOwner, users }) => {
   });
   const loading = updateLoading || deleteLoading;
 
-  // useEffect(() => {
-  //   if (updateTask) {
-  //     const variables = {
-  //       input: { taskId: id, name: nameValue, complete: completeValue },
-  //     };
-  //     updateTask({ variables });
-  //   }
-  // }, [id, nameValue, completeValue, updateTask]);
+  useEffect(() => {
+    if (updateTask) {
+      const variables = {
+        input: { taskId: id, name: nameValue, complete: completeValue, userId: taskOwnerId },
+      };
+      updateTask({ variables });
+    }
+  }, [id, nameValue, completeValue, updateTask]);
 
   const onClickDelete = () => {
     const variables = { input: { taskId: id } };

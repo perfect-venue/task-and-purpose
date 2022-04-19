@@ -12,6 +12,7 @@ const GET_TASKS = gql`
       id
       name
       complete
+      userId
       user {
         id
         fullName
@@ -57,6 +58,7 @@ const TaskList = () => {
             name={task.name}
             id={task.id}
             taskOwner={task.user}
+            taskOwnerId={task.userId}
             users={users}
           />
         ))}
