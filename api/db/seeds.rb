@@ -25,21 +25,25 @@ Task.create!(
       name: "Martian Chronicles",
       complete: false,
       user: john,
+      duedate: Faker::Date.between(from: 2.days.ago, to: Date.today)
     },
     {
       name: "The Martian",
       complete: false,
       user: john,
+      duedate: Faker::Date.between(from: 2.days.ago, to: 1.year.from_now)
     },
     {
       name: "Doom",
       complete: false,
       user: jane,
+      duedate: Faker::Date.between(from: 2.days.ago, to: Date.today)
     },
     {
       name: "Mars Attacks!",
       complete: true,
       user: jane,
+      duedate: Faker::Date.between(from: 2.days.ago, to: 1.year.from_now)
     }
   ]
 )
