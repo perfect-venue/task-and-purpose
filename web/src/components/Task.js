@@ -16,6 +16,7 @@ const UPDATE_TASK = gql`
         id
         name
         complete
+        userId
       }
     }
   }
@@ -44,18 +45,26 @@ const Task = ({ id, name, complete, taskOwner, users }) => {
   });
   const loading = updateLoading || deleteLoading;
 
-  useEffect(() => {
-    if (updateTask) {
-      const variables = {
-        input: { taskId: id, name: nameValue, complete: completeValue },
-      };
-      updateTask({ variables });
-    }
-  }, [id, nameValue, completeValue, updateTask]);
+  // useEffect(() => {
+  //   if (updateTask) {
+  //     const variables = {
+  //       input: { taskId: id, name: nameValue, complete: completeValue },
+  //     };
+  //     updateTask({ variables });
+  //   }
+  // }, [id, nameValue, completeValue, updateTask]);
 
   const onClickDelete = () => {
     const variables = { input: { taskId: id } };
     deleteTask({ variables });
+  };
+
+  const handleOwnerUpdate = (e) => {
+    const variables = {
+      input: { taskId: id, name: nameValue, complete: completeValue, userId: e.target.value },
+    };
+    console.log(variables)
+    updateTask({ variables });
   };
 
   return (
@@ -75,17 +84,19 @@ const Task = ({ id, name, complete, taskOwner, users }) => {
         onChange={(e) => setNameValue(e.target.value)}
         sx={{ flexGrow: 1 }}
       />
-      <InputLabel id="demo-simple-select-label">Task Owner</InputLabel>
+      <InputLabel sx={{ mr: '8px' }} id="demo-simple-select-label">
+        Task Owner
+      </InputLabel>
       <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"
         value={taskOwner?.fullName}
         label="Age"
-        onChange={() => {}}
+        onChange={handleOwnerUpdate}
       >
         {users?.map((user) => {
           return (
-            <MenuItem key={user.id} value={user.fullName}>
+            <MenuItem key={user.id} value={user.id}>
               {user.fullName}
             </MenuItem>
           );

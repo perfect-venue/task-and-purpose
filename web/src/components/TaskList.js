@@ -13,6 +13,7 @@ const GET_TASKS = gql`
       name
       complete
       user {
+        id
         fullName
       }
     }
