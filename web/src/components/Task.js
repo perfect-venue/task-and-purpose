@@ -1,4 +1,6 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { useState, useEffect } from 'react';
+import { gql, useMutation } from '@apollo/client';
+
 import DeleteIcon from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
@@ -7,7 +9,9 @@ import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { useState, useEffect } from 'react';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 const UPDATE_TASK = gql`
   mutation UpdateTask($input: UpdateTaskInput!) {
@@ -34,9 +38,11 @@ const DELETE_TASK = gql`
   }
 `;
 
-const Task = ({ id, name, complete, taskOwner, users, taskOwnerId }) => {
+const Task = ({ id, name, complete, taskOwner, users, taskOwnerId, dueDate }) => {
   const [nameValue, setNameValue] = useState(name);
   const [completeValue, setCompletedValue] = useState(complete);
+  const [dateValue, setDateValue] = useState(new Date(dueDate));
+
   const [updateTask, { loading: updateLoading }] = useMutation(UPDATE_TASK, {
     refetchQueries: ['GetTasks'],
   });
@@ -52,6 +58,7 @@ const Task = ({ id, name, complete, taskOwner, users, taskOwnerId }) => {
       };
       updateTask({ variables });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, nameValue, completeValue, updateTask]);
 
   const onClickDelete = () => {
@@ -66,41 +73,64 @@ const Task = ({ id, name, complete, taskOwner, users, taskOwnerId }) => {
     updateTask({ variables });
   };
 
+  const handleDateChange = (newValue) => {
+    setDateValue(newValue);
+    const variables = {
+      input: {
+        taskId: id,
+        name: nameValue,
+        complete: completeValue,
+        userId: taskOwnerId,
+        duedate: newValue,
+      },
+    };
+    updateTask({ variables });
+  };
+
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        p: 2,
-        borderBottom: '1px solid #ccc',
-      }}
-    >
-      <Checkbox checked={completeValue} onChange={(e) => setCompletedValue(e.target.checked)} />
-      <TextField
-        InputProps={{ disableUnderline: true }}
-        variant="standard"
-        value={nameValue}
-        onChange={(e) => setNameValue(e.target.value)}
-        sx={{ flexGrow: 1 }}
-      />
-      <InputLabel sx={{ mr: '8px' }}>Task Owner</InputLabel>
-      <Select value={taskOwner?.fullName} label="Task Owner">
-        {users?.map((user) => {
-          return (
-            <MenuItem
-              key={user.id}
-              value={user.fullName}
-              onClick={(e) => handleOwnerUpdate(e, user.id)}
-            >
-              {user.fullName}
-            </MenuItem>
-          );
-        })}
-      </Select>
-      <IconButton disabled={loading} onClick={onClickDelete}>
-        <DeleteIcon />
-      </IconButton>
-    </Box>
+    <LocalizationProvider dateAdapter={AdapterMoment}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          p: 2,
+          borderBottom: '1px solid #ccc',
+        }}
+      >
+        <Checkbox checked={completeValue} onChange={(e) => setCompletedValue(e.target.checked)} />
+        <TextField
+          InputProps={{ disableUnderline: true }}
+          variant="standard"
+          value={nameValue}
+          onChange={(e) => setNameValue(e.target.value)}
+          sx={{ flexGrow: 1 }}
+        />
+        <DesktopDatePicker
+          label="Due Date"
+          inputFormat="MM/DD/YYYY"
+          value={dateValue}
+          onChange={handleDateChange}
+          renderInput={(params) => <TextField {...params} />}
+        />
+        <InputLabel sx={{ mr: '8px', ml: '16px' }}>Task Owner</InputLabel>
+        <Select value={taskOwner?.fullName} label="Task Owner">
+          {users?.map((user) => {
+            return (
+              <MenuItem
+                key={user.id}
+                value={user.fullName}
+                onClick={(e) => handleOwnerUpdate(e, user.id)}
+              >
+                {user.fullName}
+              </MenuItem>
+            );
+          })}
+        </Select>
+        <IconButton disabled={loading} onClick={onClickDelete}>
+          <DeleteIcon />
+        </IconButton>
+      </Box>
+    </LocalizationProvider>
   );
 };
 export default Task;
