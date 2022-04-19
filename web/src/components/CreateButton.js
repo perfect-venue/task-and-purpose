@@ -1,7 +1,7 @@
-import { gql, useMutation } from "@apollo/client";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import * as React from "react";
+import { gql, useMutation } from '@apollo/client';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import * as React from 'react';
 
 const CREATE_TASK = gql`
   mutation CreateTask($input: CreateTaskInput!) {
@@ -10,6 +10,7 @@ const CREATE_TASK = gql`
         id
         name
         complete
+        userId
       }
     }
   }
@@ -17,18 +18,18 @@ const CREATE_TASK = gql`
 
 const CreateButton = () => {
   const [createTask, { loading }] = useMutation(CREATE_TASK, {
-    refetchQueries: ["GetTasks"],
+    refetchQueries: ['GetTasks'],
   });
 
   const onClickCreate = () => {
-    const variables = { input: { name: "New Task" } };
+    const variables = { input: { name: 'New Task', userId: 1 } };
     createTask({ variables });
   };
 
   return (
-    <Box sx={{ p: 2, display: "flex", justifyContent: "flex-end" }}>
+    <Box sx={{ p: 2, display: 'flex', justifyContent: 'flex-end' }}>
       <Button variant="outlined" disabled={loading} onClick={onClickCreate}>
-        {loading ? "Loading..." : "New Task"}
+        {loading ? 'Loading...' : 'New Task'}
       </Button>
     </Box>
   );
