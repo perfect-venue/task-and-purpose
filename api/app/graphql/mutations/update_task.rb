@@ -9,6 +9,9 @@ module Mutations
     argument :duedate, GraphQL::Types::ISO8601Date, required: false
 
     def resolve(task:, name:, complete:, user_id:, duedate:)
+      if task.complete != complete && complete == true
+        NotifyTeamLeaderMailer.notify_team_leader(task.id, user_id).deliver
+      end
       task.update!(name: name, complete: complete, user_id: user_id, duedate: duedate)
       { task: task }
     end
