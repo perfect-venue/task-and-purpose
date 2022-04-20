@@ -11,6 +11,7 @@ module Mutations
     def resolve(task:, name:, complete:, user_id:, duedate:)
       if task.complete != complete && complete == true
         NotifyTeamLeaderMailer.notify_team_leader(task.id, user_id).deliver
+        task.update!(name: name, complete: complete, user_id: user_id, duedate: duedate)
       end
       task.update!(name: name, complete: complete, user_id: user_id, duedate: duedate)
       { task: task }
