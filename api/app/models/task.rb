@@ -3,7 +3,7 @@ class Task < ApplicationRecord
 
   def self.send_duedate_reminders
     Task.all.each do |task|
-      if Date.today == task.duedate.prev_day
+      if Date.today == task.duedate.prev_day && task.complete == false
         TaskMailer.duedate_reminder_email(task.id).deliver
       end
     end
