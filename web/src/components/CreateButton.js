@@ -19,7 +19,7 @@ const CREATE_TASK = gql`
 
 const CreateButton = () => {
   const [createTask, { loading }] = useMutation(CREATE_TASK, {
-    refetchQueries: ['GetTasks'],
+    refetchQueries: ['GetTasksAndUsers'],
   });
 
   const onClickCreate = () => {

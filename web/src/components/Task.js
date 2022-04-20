@@ -45,10 +45,10 @@ const Task = ({ id, name, complete, taskOwner, users, taskOwnerId, dueDate }) =>
   const [dateValue, setDateValue] = useState(new Date(dueDate));
 
   const [updateTask, { loading: updateLoading }] = useMutation(UPDATE_TASK, {
-    refetchQueries: ['GetTasks'],
+    refetchQueries: ['GetTasksAndUsers'],
   });
   const [deleteTask, { loading: deleteLoading }] = useMutation(DELETE_TASK, {
-    refetchQueries: ['GetTasks'],
+    refetchQueries: ['GetTasksAndUsers'],
   });
   const loading = updateLoading || deleteLoading;
 
