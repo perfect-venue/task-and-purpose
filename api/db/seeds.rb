@@ -10,13 +10,22 @@
 john = User.create!(
   email: "john.doe@example.com",
   first_name: "John",
-  last_name: "Doe"
+  last_name: "Doe",
+  team_leader: false
 )
 
 jane = User.create!(
   email: "jane.doe@example.com",
   first_name: "Jane",
-  last_name: "Doe"
+  last_name: "Doe",
+  team_leader: true
+)
+
+joe = User.create!(
+  email: "joe.doe@example.com",
+  first_name: "Joe",
+  last_name: "Doe",
+  team_leader: false
 )
 
 Task.create!(
@@ -30,19 +39,19 @@ Task.create!(
     {
       name: "The Martian",
       complete: false,
-      user: john,
+      user: joe,
       duedate: Faker::Date.between(from: 2.days.ago, to: 1.year.from_now)
     },
     {
       name: "Doom",
       complete: false,
       user: jane,
-      duedate: Faker::Date.between(from: 2.days.ago, to: Date.today)
+      duedate: Faker::Date.between(from: 2.days.ago, to: Date.today),
     },
     {
       name: "Mars Attacks!",
       complete: true,
-      user: jane,
+      user: joe,
       duedate: Faker::Date.between(from: 2.days.ago, to: 1.year.from_now)
     }
   ]

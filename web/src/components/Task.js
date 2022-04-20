@@ -65,6 +65,7 @@ const Task = ({ id, name, complete, taskOwner, users, taskOwnerId, dueDate }) =>
       };
       updateTask({ variables });
     }
+    // @todo: need to clean up all these change handlers into the useEffect or a single function maybe within a form
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, nameValue, completeValue, updateTask]);
 
