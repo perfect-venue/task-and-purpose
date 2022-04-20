@@ -21,6 +21,7 @@ const UPDATE_TASK = gql`
         name
         complete
         userId
+        duedate
       }
     }
   }
@@ -54,7 +55,13 @@ const Task = ({ id, name, complete, taskOwner, users, taskOwnerId, dueDate }) =>
   useEffect(() => {
     if (updateTask) {
       const variables = {
-        input: { taskId: id, name: nameValue, complete: completeValue, userId: taskOwnerId },
+        input: {
+          taskId: id,
+          name: nameValue,
+          complete: completeValue,
+          userId: taskOwnerId,
+          duedate: dateValue,
+        },
       };
       updateTask({ variables });
     }
@@ -68,7 +75,7 @@ const Task = ({ id, name, complete, taskOwner, users, taskOwnerId, dueDate }) =>
 
   const handleOwnerUpdate = (e, userId) => {
     const variables = {
-      input: { taskId: id, name: nameValue, complete: completeValue, userId },
+      input: { taskId: id, name: nameValue, complete: completeValue, userId, duedate: dateValue },
     };
     updateTask({ variables });
   };

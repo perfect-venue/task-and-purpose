@@ -10,6 +10,7 @@ const CREATE_TASK = gql`
         id
         name
         complete
+        duedate
         userId
       }
     }
@@ -22,7 +23,8 @@ const CreateButton = () => {
   });
 
   const onClickCreate = () => {
-    const variables = { input: { name: 'New Task', userId: 1 } };
+    // @todo: with auth we could default userId to current user
+    const variables = { input: { name: 'New Task' } };
     createTask({ variables });
   };
 
