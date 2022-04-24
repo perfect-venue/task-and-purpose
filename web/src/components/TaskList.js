@@ -11,6 +11,13 @@ const GET_TASKS = gql`
       id
       name
       complete
+      dueDate
+      userId
+    }
+    users {
+      id
+      name
+      email
     }
   }
 `;
@@ -18,6 +25,7 @@ const GET_TASKS = gql`
 const TaskList = () => {
   const { data } = useQuery(GET_TASKS);
   const tasks = data?.tasks || [];
+  const users = data?.users || [];
 
   return (
     <Box
@@ -28,9 +36,9 @@ const TaskList = () => {
         height: "80vh",
       }}
     >
-      <Paper sx={{ width: "50vw" }}>
-        {tasks.map((task) => (
-          <Task key={task.id} {...task} />
+      <Paper sx={{ width: "65vw" }}>
+        {tasks.map(task => (
+          <Task key={task.id} {...task} owners={users} />
         ))}
         <CreateButton />
       </Paper>

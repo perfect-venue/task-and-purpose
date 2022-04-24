@@ -5,6 +5,8 @@ import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import { useState, useEffect } from "react";
+import { SelectUser } from "./SelectUser";
+import { DatePicker } from "./DatePicker";
 
 const UPDATE_TASK = gql`
   mutation UpdateTask($input: UpdateTaskInput!) {
@@ -13,6 +15,8 @@ const UPDATE_TASK = gql`
         id
         name
         complete
+        userId
+        dueDate
       }
     }
   }
@@ -30,9 +34,11 @@ const DELETE_TASK = gql`
   }
 `;
 
-const Task = ({ id, name, complete }) => {
+const Task = ({ id, name, complete, dueDate, userId, owners }) => {
   const [nameValue, setNameValue] = useState(name);
   const [completeValue, setCompletedValue] = useState(complete);
+  const [dueDateValue, setDueDateValue] = useState(dueDate);
+  const [userIdValue, setUserIdValue] = useState(userId);
   const [updateTask, { loading: updateLoading }] = useMutation(UPDATE_TASK, {
     refetchQueries: ["GetTasks"],
   });
@@ -44,11 +50,17 @@ const Task = ({ id, name, complete }) => {
   useEffect(() => {
     if (updateTask) {
       const variables = {
-        input: { taskId: id, name: nameValue, complete: completeValue },
+        input: {
+          taskId: id,
+          name: nameValue,
+          complete: completeValue,
+          dueDate: dueDateValue,
+          userId: userIdValue ? parseInt(userIdValue) : null,
+        },
       };
       updateTask({ variables });
     }
-  }, [id, nameValue, completeValue, updateTask]);
+  }, [id, nameValue, completeValue, dueDateValue, userIdValue, updateTask]);
 
   const onClickDelete = () => {
     const variables = { input: { taskId: id } };
@@ -60,24 +72,41 @@ const Task = ({ id, name, complete }) => {
       sx={{
         display: "flex",
         alignItems: "center",
+        justifyContent: "space-between",
         p: 2,
         borderBottom: "1px solid #ccc",
       }}
     >
       <Checkbox
         checked={completeValue}
-        onChange={(e) => setCompletedValue(e.target.checked)}
+        onChange={e => setCompletedValue(e.target.checked)}
       />
       <TextField
         InputProps={{ disableUnderline: true }}
         variant="standard"
         value={nameValue}
-        onChange={(e) => setNameValue(e.target.value)}
-        sx={{ flexGrow: 1 }}
+        onChange={e => setNameValue(e.target.value)}
+        sx={{ flexGrow: 1, minWidth: 200 }}
       />
-      <IconButton disabled={loading} onClick={onClickDelete}>
-        <DeleteIcon />
-      </IconButton>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <DatePicker
+          dueDateValue={dueDateValue}
+          setDueDateValue={setDueDateValue}
+        />
+        <SelectUser
+          userIdValue={userIdValue}
+          setUserIdValue={setUserIdValue}
+          owners={owners}
+        />
+        <IconButton disabled={loading} onClick={onClickDelete}>
+          <DeleteIcon />
+        </IconButton>
+      </div>
     </Box>
   );
 };
