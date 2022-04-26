@@ -10,6 +10,7 @@ const CREATE_TASK = gql`
         id
         name
         complete
+        userId
       }
     }
   }
@@ -21,7 +22,9 @@ const CreateButton = () => {
   });
 
   const onClickCreate = () => {
-    const variables = { input: { name: "New Task" } };
+    const variables = {
+      input: { name: "New Task", userId: null },
+    };
     createTask({ variables });
   };
 
