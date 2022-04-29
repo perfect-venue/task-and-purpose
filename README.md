@@ -24,6 +24,8 @@ You can see the queries defined on the graph at `api/app/graphql/types/query_typ
 
 There are three mutations implemented that you can find in `api/app/graphql/mutations/`. These are create, update, and delete actions for the `Task` model.
 
+There is a [Graphiql](https://github.com/graphql/graphiql/tree/main/packages/graphiql#readme) instance installed at `http://localhost:3001/graphiql`.
+
 ## Action Mailer
 Action Mailer is the Rails module that allows you to send emails from the backend. If you've used Rails before, you are likely familiar with Action Mailer. If you have not, fear not. You can get up to speed using [this guide](https://guides.rubyonrails.org/action_mailer_basics.html).
 
