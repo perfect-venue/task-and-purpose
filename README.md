@@ -4,18 +4,23 @@
 *Task and Purpose* is a minimal task management application. 
 
 It consists of 3 modules: `Api`, `Web`, and `Native`.
+### Ruby
+You will need to have ruby version 2.7.4 installed. I recommomend using [rbenv](https://github.com/rbenv/rbenv#installation) or some other ruby version manager.
+### Node
+I've tested this application with node version v14.18.1. Other versions may work, but YMMV. I recommend using [nvm](https://github.com/nvm-sh/nvm#installing-and-updating) or some other node version manager. This project uses yarn.
+
 # Api
 The api is a Rails application that exposes a GraphQL endpoint at `http://localhost:3001/graphql`
-## Creating and Seeding the Database
+### Creating and Seeding the Database
 The database we're using is Sqlite. You can create and seed the database with
 ```
 cd api
 bundle exec rails db:setup
 ```
-## Models
+### Models
 `Task` is the only Active Record model in the project. It only has 2 notable fields `name` and `complete`. You can see the database schema at `api/db/schema.rb`.
 
-## GraphQL
+### GraphQL
 GraphQL is implemented with the `graphql` gem. It is the only notable gem in the project, and you can find the documentation [here](https://graphql-ruby.org/).
 
 `Task` is the only type on the graph, and you can find the definition at `api/app/graphql/types/task_type.rb`.
@@ -26,7 +31,7 @@ There are three mutations implemented that you can find in `api/app/graphql/muta
 
 There is a [Graphiql](https://github.com/graphql/graphiql/tree/main/packages/graphiql#readme) instance installed at `http://localhost:3001/graphiql`.
 
-## Action Mailer
+### Action Mailer
 Action Mailer is the Rails module that allows you to send emails from the backend. If you've used Rails before, you are likely familiar with Action Mailer. If you have not, fear not. You can get up to speed using [this guide](https://guides.rubyonrails.org/action_mailer_basics.html).
 
 You will find an example of a mailer implementation at `api/app/mailers/task_mailer.rb` and its corresponding view at `api/app/view/task_mailer/example_email.html.erb`. Feel free to extend this mailer or create your own. 
@@ -45,7 +50,7 @@ TaskMailer.with(task_id: 1).example_email.deliver_now
 You should be able to see your email at `http://localhost:3001/letter_opener`.
 
 
-## Starting the server
+### Starting the server
 You can start the application with
 ```
 cd api
@@ -58,7 +63,7 @@ There are a 2 notable libraries:
 - [MUI](https://mui.com/)
 - [Apollo Client](https://www.apollographql.com/docs/react)
 
-## Starting the Web Client
+### Starting the Web Client
 You can start the application with
 ```
 cd web
@@ -72,7 +77,7 @@ There are a 2 notable libraries:
 - [React Native Paper](https://reactnativepaper.com/)
 - [Apollo Client](https://www.apollographql.com/docs/react)
 
-## Starting the Native Client
+### Starting the Native Client
 You can start the application with
 ```
 cd native
