@@ -11,6 +11,12 @@ I've tested this application with node version v14.18.1. Other versions may work
 
 # Api
 The api is a Rails application that exposes a GraphQL endpoint at `http://localhost:3001/graphql`
+### Installing Dependencies
+You can install the ruby dependencies via bundler with
+```
+cd api
+bundle install
+```
 ### Creating and Seeding the Database
 The database we're using is Sqlite. You can create and seed the database with
 ```
@@ -63,6 +69,13 @@ There are a 2 notable libraries:
 - [MUI](https://mui.com/)
 - [Apollo Client](https://www.apollographql.com/docs/react)
 
+### Installing Dependencies
+You can install the javascript dependencies via yarn with
+```
+cd web
+yarn install
+```
+
 ### Starting the Web Client
 You can start the application with
 ```
@@ -76,6 +89,13 @@ The native client is a standard React Native application created with [Create Re
 There are a 2 notable libraries:
 - [React Native Paper](https://reactnativepaper.com/)
 - [Apollo Client](https://www.apollographql.com/docs/react)
+
+### Installing Dependencies
+You can install the javascript dependencies via yarn with
+```
+cd web
+yarn install
+```
 
 ### Starting the Native Client
 You can start the application with
