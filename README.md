@@ -9,6 +9,11 @@ You will need to have ruby version 2.7.4 installed. I recommomend using [rbenv](
 ### Node
 I've tested this application with node version v16.17.0. Other versions may work, but YMMV. I recommend using [nvm](https://github.com/nvm-sh/nvm#installing-and-updating) or some other node version manager.
 
+![image](https://user-images.githubusercontent.com/2251951/189500193-793496bf-bccd-44e1-ad1d-549af1d155b0.png)
+![image](https://user-images.githubusercontent.com/2251951/189500253-21792918-d659-4417-bc23-24f998d2c8f1.png)
+
+
+
 # Api
 The api is a Rails application that exposes a GraphQL endpoint at `http://localhost:3001/graphql`
 ### Installing Dependencies
