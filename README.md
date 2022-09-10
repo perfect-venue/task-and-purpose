@@ -7,7 +7,7 @@ It consists of 3 modules: `Api`, `Web`, and `Native`.
 ### Ruby
 You will need to have ruby version 2.7.4 installed. I recommomend using [rbenv](https://github.com/rbenv/rbenv#installation) or some other ruby version manager.
 ### Node
-I've tested this application with node version v14.18.1. Other versions may work, but YMMV. I recommend using [nvm](https://github.com/nvm-sh/nvm#installing-and-updating) or some other node version manager.
+I've tested this application with node version v16.17.0. Other versions may work, but YMMV. I recommend using [nvm](https://github.com/nvm-sh/nvm#installing-and-updating) or some other node version manager.
 
 # Api
 The api is a Rails application that exposes a GraphQL endpoint at `http://localhost:3001/graphql`
