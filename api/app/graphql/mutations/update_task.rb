@@ -10,6 +10,11 @@ module Mutations
 
     def resolve(task:, name:, due_date:, owner:, complete:)
       task.update!(name: name, owner: owner, complete: complete, due_date: due_date)
+
+      if complete === true
+        TaskStatusChangedMailer.with(task_id: task.id).task_completed.deliver_now
+      end
+
       { task: task }
     end
   end
