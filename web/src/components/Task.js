@@ -12,6 +12,7 @@ const UPDATE_TASK = gql`
       task {
         id
         name
+        owner
         complete
       }
     }
@@ -30,8 +31,9 @@ const DELETE_TASK = gql`
   }
 `;
 
-const Task = ({ id, name, complete }) => {
+const Task = ({ id, name, owner, complete }) => {
   const [nameValue, setNameValue] = useState(name);
+  const [ownerValue, setOwnerValue] = useState(owner);
   const [completeValue, setCompletedValue] = useState(complete);
   const [updateTask, { loading: updateLoading }] = useMutation(UPDATE_TASK, {
     refetchQueries: ["GetTasks"],
@@ -44,11 +46,11 @@ const Task = ({ id, name, complete }) => {
   useEffect(() => {
     if (updateTask) {
       const variables = {
-        input: { taskId: id, name: nameValue, complete: completeValue },
+        input: { taskId: id, name: nameValue, owner: ownerValue, complete: completeValue },
       };
       updateTask({ variables });
     }
-  }, [id, nameValue, completeValue, updateTask]);
+  }, [id, nameValue, ownerValue, completeValue, updateTask]);
 
   const onClickDelete = () => {
     const variables = { input: { taskId: id } };
@@ -73,6 +75,14 @@ const Task = ({ id, name, complete }) => {
         variant="standard"
         value={nameValue}
         onChange={(e) => setNameValue(e.target.value)}
+        sx={{ flexGrow: 1 }}
+      />
+      <TextField
+        InputProps={{ disableUnderline: true }}
+        variant="standard"
+        value={ownerValue}
+        placeholder="Owner not assigned"
+        onChange={(e) => setOwnerValue(e.target.value)}
         sx={{ flexGrow: 1 }}
       />
       <IconButton disabled={loading} onClick={onClickDelete}>

@@ -10,6 +10,7 @@ const GET_TASKS = gql`
     tasks {
       id
       name
+      owner
       complete
     }
   }
