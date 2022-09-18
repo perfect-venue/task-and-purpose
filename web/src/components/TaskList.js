@@ -12,6 +12,7 @@ const GET_TASKS = gql`
       name
       owner
       complete
+      dueDate
     }
   }
 `;

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_18_163115) do
+ActiveRecord::Schema.define(version: 2022_09_18_170506) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "name", null: false
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2022_09_18_163115) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "owner"
+    t.datetime "due_date", precision: 6
   end
 
 end
