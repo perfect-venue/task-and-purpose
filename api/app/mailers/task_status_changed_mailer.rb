@@ -10,6 +10,14 @@ class TaskStatusChangedMailer < ApplicationMailer
     @greeting = "Hi"
     mail(to: 'admin@pvclient.com', subject: 'Someone completed a task')
   end
-end
 
-# TaskMailer.with(task_id: 1).example_email.deliver_now
+  def secheduleTaskNotifications
+    for task in Task.all do
+      tomorrow = Time.now + (60 * 60 * 24)
+      within_1_day = task.due_date <=> tomorrow
+      if within_1_day <= 0
+        TaskStatusChangedMailer.with(task_id: task.id).task_completed.deliver_now
+      end
+    end
+  end
+end
