@@ -88,7 +88,7 @@ cd web
 npm start
 ```
 The web client should be available at `http://localhost:3000`
-# Native
+# Native (Optional)
 The native client is a standard React Native application created with [Create React Native App](https://reactnative.dev/blog/2017/03/13/introducing-create-react-native-app).
 
 There are a 2 notable libraries:
